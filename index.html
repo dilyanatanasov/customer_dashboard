@@ -1,0 +1,431 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="icon" type="shortcut-icon" href="small_logo.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>411 Dashboard</title>
+  </head>
+  <body style="font-family: 'Poppins', sans-serif;">
+
+    <header>
+        <nav class="navbar navbar-expand-sm" style="background-image: url('banner.png');">
+            <a class="navbar-brand ml-2 font-weight-bold" href="#">411 Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+                <span><i class="fa fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExample03">
+                <ul class="navbar-nav mr-auto pl-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Users</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Deals
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Businesses</a>
+                            <a class="dropdown-item" href="#">Invoices</a>
+                            <a class="dropdown-item" href="#">Contacts</a>
+                        </div>
+                    </li>
+                <ul>
+            </div>
+        </nav>  
+    </header>
+    <main role="main">
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-xl-6" id="canceled">
+                    <script id="cancellation_request" type="text/x-handlebars-template"> 
+                        <h4 class="p-2 bg-primary rounded mb-0 text-white"><i class="fa fa-user-times ml-2 mr-2"></i>Cancelation Request Details</h4>
+                        <table class="table">
+                            <tr>
+                                <td>Created At:</td>
+                                <td>{{cancellation_request_details.created_at}}</td>
+                            </tr>
+                            <tr>
+                                <td>First Name:</td>
+                                <td>{{cancellation_request_details.created_by.first_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Name:</td>
+                                <td>{{cancellation_request_details.created_by.last_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status:</td>
+                                <td>{{cancellation_request_details.status}}</td>
+                            </tr>
+                    </script>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6" id="customer">
+                    <script id="customer_detail" type="text/x-handlebars-template">
+                        <h4 class="p-2 bg-primary rounded mb-0 text-white"><i class="fa fa-user ml-2 mr-2"></i>Customer</h4>
+                        <table class="table">   
+                            <tbody>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td>{{customer.first_name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td>{{customer.last_name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phones:</td>
+                                    <td>
+                                        <span class="row">
+                                            <span class="col">Main:</span>
+                                            <span class="col">{{customer.phones.main}}</span>
+                                        </span>
+                                        <span class="row mt-2">
+                                            <span class="col">Additional:</span>
+                                            <span class="col">{{customer.phones.additional}}</span>
+                                        </span>
+                                        <span class="row mt-2">
+                                            <span class="col">Cell:</span>
+                                            <span class="col">{{customer.phones.cell}}</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </script>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12" id="calls">
+                    <script id="calls_details" type="text/x-handlebars-template"> 
+                        <h4 class="p-2 bg-primary rounded mb-0 text-white"><i class="fa fa-phone ml-2 mr-2"></i>Calls</h4>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <span class="row pb-2" style="border-bottom: 1px solid #ccc">
+                                        <span class="col">Phone</span>
+                                        <span class="col">Duration</span>
+                                        <span class="col">Notes</span>
+                                        <span class="col">Created At</span>
+                                    </span>
+                                    {{#calls}}
+                                    <span class="row mt-3">
+                                        <span class="col">{{this.phone}}</span>
+                                        <span class="col">{{this.duration}}</span>
+                                        <span class="col">{{this.notes}}</span>
+                                        <span class="col">{{this.created_at}}</span>
+                                    </span>
+                                    {{/calls}}
+                                </td>
+                            </tr>
+                    </script>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-decoration-none" id="deal">
+                    <script id="deals_data" type="text/x-handlebars-template"> 
+                        {{#deals}}
+                        <h4 class="p-2 bg-primary rounded m-2 text-white"><i class="fa fa-files-o ml-2 mr-2"></i>Deals</h4>
+                        <table class="table">
+                            <tr>
+                                <td>Age:</td>
+                                <td>{{this.age}}</td>
+                            </tr>
+                            <tr>
+                                <td>Balance:</td>
+                                <td>{{this.balance}}</td>
+                            </tr>
+                            <tr>
+                                <td>Type:</td>
+                                <td>{{this.type}}</td>
+                            </tr>
+                            <tr>
+                                <td>Paid Date:</td>
+                                <td>{{this.paid_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>PTP Date:</td>
+                                <td>{{this.ptp_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Created At:</td>
+                                <td>{{this.paid_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Created By:</td>
+                                <td>{{this.created_by.first_name}} {{this.created_by.last_name}}</td>
+                            </tr>
+                        </table>
+                        <div class="accordion md-accordion" id="accordionEx1" role="tablist" aria-multiselectable="true">
+                            <div class="card">
+                                <div class="card-header text-dark" role="tab" id="headingTwo1">
+                                <a class="collapsed text-decoration-none" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1"
+                                    aria-expanded="false" aria-controls="collapseTwo1">
+                                    <h5 class="mb-0">
+                                    Business <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                                </div>
+                                <div id="collapseTwo1" class="collapse" role="tabpanel" aria-labelledby="headingTwo1"
+                                data-parent="#accordionEx1">
+                                <div class="card-body">
+                                    <table class="table">
+                                            <tr>
+                                                <td>Company Name:</td>
+                                                <td>{{this.business.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Address:</td>
+                                                <td>{{this.business.address.street}} {{this.business.address.city}} {{this.business.address.state}} {{this.business.address.zip}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phones:</td>
+                                                <td>
+                                                    <span class="row">
+                                                        <span class="col">Main:</span>
+                                                        <span class="col">{{this.business.phones.main}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Additional:</span>
+                                                        <span class="col">{{this.business.phones.additional}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Cell:</span>
+                                                        <span class="col">{{this.business.phones.cell}}</span>
+                                                    </span>
+                                                </tr>
+                                            <tr>
+                                                <td>Website:</td>
+                                                <td><a href="{{this.business.website}}">{{this.business.website}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Emails:</td>
+                                                <td>{{this.business.emails}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Industry:</td>
+                                                <td>{{this.business.industry}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Languages:</td>
+                                                <td>{{this.business.language_spoken}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Working Hours:</td>
+                                                <td>
+                                                    <span class="row">
+                                                            <span class="col">Monday:</span>
+                                                            <span class="col">{{this.business.working_hours.monday.from}}</span>
+                                                            <span class="col">{{this.business.working_hours.monday.to}}</span>
+                                                        </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Tuesday:</span>
+                                                        <span class="col">{{this.business.working_hours.tuesday.from}}</span>
+                                                        <span class="col">{{this.business.working_hours.tuesday.to}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Wednesday:</span>
+                                                        <span class="col">{{this.business.working_hours.wednesday.from}}</span>
+                                                        <span class="col">{{this.business.working_hours.wednesday.to}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Thursday:</span>
+                                                        <span class="col">{{this.business.working_hours.thursday.from}}</span>
+                                                        <span class="col">{{this.business.working_hours.thursday.to}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Friday:</span>
+                                                        <span class="col">{{this.business.working_hours.friday.from}}</span>
+                                                        <span class="col">{{this.business.working_hours.friday.to}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Saturday:</span>
+                                                        <span class="col">{{this.business.working_hours.saturday.from}}</span>
+                                                        <span class="col">{{this.business.working_hours.saturday.to}}</span>
+                                                    </span>
+                                                    <span class="row mt-2">
+                                                        <span class="col">Sunday:</span>
+                                                        <span class="col">{{this.business.working_hours.sunday.from}}</span>
+                                                        <span class="col">{{this.business.working_hours.sunday.to}}</span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Discounts:</td>
+                                                <td>{{this.business.discounts}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingTwo2">
+                                <a class="collapsed text-decoration-none" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo21"
+                                    aria-expanded="false" aria-controls="collapseTwo21">
+                                    <h5 class="mb-0">
+                                    Service <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                                </div>
+                                <div id="collapseTwo21" class="collapse" role="tabpanel" aria-labelledby="headingTwo21"
+                                data-parent="#accordionEx1">
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <th>Number</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Placement</th>
+                                            <th>Pro WS</th>
+                                            <th>Contacts</th>
+                                            <th>Link</th>
+                                        </thead>
+                                        <tbody>
+                                            {{#this.service}}
+                                            <tr>
+                                                <td>{{this.number}}</td>
+                                                <td>{{this.type}}</td>
+                                                <td>{{this.status}}</td>
+                                                <td>{{this.placement_status}}</td>
+                                                <td>{{this.promarketing_website.date}}<br>{{this.promarketing_website.status}}<br>{{this.promarketing_website.url}}</td>
+                                                <td>
+                                                    {{#this.contacts}}
+                                                    <p>{{this.first_name}}<br>{{this.last_name}}<br>{{this.relation}}<br>
+                                                        {{#this.phones}}
+                                                            {{this}}<br>  
+                                                        {{/this.phones}}
+                                                    </p>
+                                                    {{/this.contacts}}
+                                                </td>
+                                                <td>{{this.link}}</td>
+                                            </tr>
+                                            {{/this.service}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingThree31">
+                                <a class="collapsed text-decoration-none" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseThree31"
+                                    aria-expanded="false" aria-controls="collapseThree31">
+                                    <h5 class="mb-0">
+                                    Invoice <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                                </div>
+                                <div id="collapseThree31" class="collapse" role="tabpanel" aria-labelledby="headingThree31"
+                                data-parent="#accordionEx1">
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                            <th>Currency</th>
+                                            <th>Created At</th>
+                                            <th>Created By</th>
+                                            <th>Wave</th>
+                                            <th>Transaction</th>
+                                        </thead>
+                                        <tbody>
+                                            {{#this.invoices}}
+                                            <tr>
+                                                <td>{{this.type}}</td>
+                                                <td>{{this.amount}}</td>
+                                                <td>{{this.currency}}</td>
+                                                <td>{{this.created_at}}</td>
+                                                <td>{{this.created_by.first_name}}<br>{{this.created_by.last_name}}</td>
+                                                <td>{{this.waive.amount}}<br>{{this.waive.status}}</td>
+                                                <td>{{this.transactions}}</td>
+                                            </tr>
+                                            {{/this.invoices}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                    <div class="card-header" role="tab" id="headingFour41">
+                                    <a class="collapsed text-decoration-none" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseFour41"
+                                        aria-expanded="false" aria-controls="collapseFour41">
+                                        <h5 class="mb-0">
+                                        Discounts <i class="fa fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                    </div>
+                                    <div id="collapseFour41" class="collapse" role="tabpanel" aria-labelledby="headingFour41"
+                                    data-parent="#accordionEx1">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>Amount</th>
+                                                <th>Type</th>
+                                            </thead>
+                                            <tbody>
+                                                {{#this.discounts}}
+                                                <td>{{this.from}}</td>
+                                                <td>{{this.to}}</td>
+                                                <td>{{this.amouth}}</td>
+                                                <td>{{this.type}}</td>
+                                                {{/this.discounts}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/deals}}
+                    </script>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="page-footer font-small teal mt-4 pt-4 bg-primary text-white">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-md-2 mt-md-0 mt-3">
+                    <img src="footer_logo.png" class="img-rounded mt-4" style="width:80%" alt="Cinque Terre">
+                    </div>
+                    <hr class="clearfix w-100 d-md-none pb-3">
+                    <div class="col-md-5 mb-md-0 mb-3">
+                    <h5 class="text-uppercase font-weight-bold">What we do?</h5>
+                    <p>We make Google work for you by designing you a fast-loading and search-engine friendly website, creating quality content that corresponds to the current search demand, and using the proper methods to list you where people are already looking for the services you provide.</p>
+                </div>
+                <hr class="clearfix w-100 d-md-none pb-3">
+                <div class="col-md-5 mb-md-0 mb-3">
+                    <h5 class="text-uppercase font-weight-bold">Contacts</h5>
+                    <p>Customer Service: 866-391-0622</p>
+                    <p>Sales: 855-259-2908</p>
+                    <p>Recruitment Line: 702-824-9365</p>
+                    <p>Customer Service Hours:<br>
+                            Monday – Friday 8AM – 4PM PST</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3 bg-dark">© 2019 Copyright:
+            <a href="https://mdbootstrap.com/education/bootstrap/"> Dilyan Atanasov</a>
+        </div>
+    </footer>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+    <script src="javascript/cancellation_request.js"> </script>
+    <script src="javascript/customer.js"> </script>
+    <script src="javascript/deals.js"> </script>
+    <script src="javascript/calls.js"> </script>
+  </body>
+</html>
